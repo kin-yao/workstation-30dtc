@@ -49,8 +49,9 @@ resource "aws_security_group" "instance" {
   }
 
   tags = {
-    Name = "${var.cluster_name}-instance-sg"
-    Day  = "8"
+    Name        = "${var.cluster_name}-instance-sg"
+    Day         = "9"
+    Environment = var.environment
   }
 }
 
@@ -72,8 +73,9 @@ resource "aws_security_group" "alb" {
   }
 
   tags = {
-    Name = "${var.cluster_name}-alb-sg"
-    Day  = "8"
+    Name        = "${var.cluster_name}-alb-sg"
+    Day         = "9"
+    Environment = var.environment
   }
 }
 
@@ -121,7 +123,13 @@ resource "aws_autoscaling_group" "web" {
 
   tag {
     key                 = "Day"
-    value               = "8"
+    value               = "9"
+    propagate_at_launch = true
+  }
+
+  tag {
+    key                 = "Environment"
+    value               = var.environment
     propagate_at_launch = true
   }
 }
@@ -133,8 +141,9 @@ resource "aws_lb" "web" {
   security_groups    = [aws_security_group.alb.id]
 
   tags = {
-    Name = "${var.cluster_name}-alb"
-    Day  = "8"
+    Name        = "${var.cluster_name}-alb"
+    Day         = "9"
+    Environment = var.environment
   }
 }
 

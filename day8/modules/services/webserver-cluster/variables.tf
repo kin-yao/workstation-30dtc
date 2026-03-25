@@ -24,3 +24,9 @@ variable "server_port" {
   type        = number
   default     = 8080
 }
+
+variable "environment" {
+  description = "Environment name for tagging resources"
+  type        = string
+  default     = "dev"
+}
